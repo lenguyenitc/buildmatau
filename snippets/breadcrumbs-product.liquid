@@ -1,0 +1,235 @@
+<style>
+  .template-product .main-cstm-prod-wrap .prod-pg-wrap,
+  .template-product .page-content--product {
+    padding-top: 20px;
+  }
+  .template-product .main-cstm-prod-wrap .breadcrumbs_block {
+    margin: 0 auto;
+    float: none;
+  }
+  .breadcrumbs {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #666666;
+    padding: 0 0 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .breadcrumbs a {
+    color: #666666;
+  }
+  .breadcrumbs svg {
+    margin: 0 8px;
+  }
+  .breadcrumbs__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  .breadcrumbs__list.mobile {
+     display:none;
+  }
+  .breadcrumbs__item {
+    display: inline-block;
+  }
+  .breadcrumbs__link:hover,
+  .breadcrumbs__link:focus {
+    text-decoration: underline;
+  }
+  @media only screen and (max-width: 768px) {
+    .template-product .main-cstm-prod-wrap .prod-pg-wrap,
+    .template-product .page-content--product {
+      padding-top: 16px;
+    }
+    .four-fifths {
+        width: 100%;
+    }
+    .breadcrumbs__list.desktop {
+        display:none;
+    }
+    .breadcrumbs__list.mobile {
+        display:block;
+    }
+    .breadcrumbs {
+        padding: 0 0 12px 8px;
+        margin-bottom: 6px;
+    }
+    .template-product .main-cstm-prod-wrap .breadcrumbs_block {
+        padding-left: 0;
+        width: calc(100% + var(--pageWidthPadding));
+    }
+    .template-product .page-width.has-breadcrumb {
+        padding: 0;
+    }
+  }
+</style>
+
+{%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
+{%- assign t = template | split: '.' | first -%}
+
+{% assign breadcrumbs_text = 'Home#$&/' %}
+{% assign breadcrumbs_mob_text = 'Home#$&/' %}
+
+<nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+  <ol class="breadcrumbs__list desktop">
+    <li class="breadcrumbs__item">
+      <a class="breadcrumbs__link" href="/">Home</a>
+      <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M0.104897 0.101684C0.138064 0.0694515 0.177465 0.0438787 0.220844 0.0264301C0.264222 0.00898154 0.310725 0 0.35769 0C0.404654 0 0.451158 0.00898154 0.494536 0.0264301C0.537914 0.0438787 0.577315 0.0694515 0.610483 0.101684L4.8951 4.25504C4.92835 4.28719 4.95473 4.32539 4.97273 4.36744C4.99073 4.40949 5 4.45456 5 4.50009C5 4.54562 4.99073 4.59069 4.97273 4.63274C4.95473 4.67479 4.92835 4.71299 4.8951 4.74514L0.610483 8.8985C0.543438 8.96349 0.452505 9 0.35769 9C0.262874 9 0.171942 8.96349 0.104897 8.8985C0.0378524 8.83351 0.000186941 8.74536 0.000186941 8.65345C0.000186941 8.56154 0.0378524 8.47339 0.104897 8.4084L4.13744 4.50009L0.104897 0.59178C0.0716462 0.559629 0.0452651 0.521435 0.0272651 0.479386C0.00926505 0.437337 0 0.392258 0 0.346732C0 0.301206 0.00926505 0.256128 0.0272651 0.214078C0.0452651 0.172029 0.0716462 0.133835 0.104897 0.101684Z" fill="#666666"/>
+      </svg>
+    </li>
+    {%- case t -%}
+      {%- when 'page' -%}
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ page.url }}" aria-current="page">{{ page.title }}</a>
+        </li>
+      {%- when 'product' -%}
+        {% assign is_parent = 0 %}
+        {% assign is_child_1 = 0 %}
+        {% assign is_child_2 = 0 %}
+        {% for link in linklists.breadcrumbs.links %}
+    
+        {% for collection in product.collections %}
+           {% if collection.url == link.url and is_parent == 0 %}
+             {% assign is_parent = 1 %}
+             <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ link.title }}</a>
+                <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.104897 0.101684C0.138064 0.0694515 0.177465 0.0438787 0.220844 0.0264301C0.264222 0.00898154 0.310725 0 0.35769 0C0.404654 0 0.451158 0.00898154 0.494536 0.0264301C0.537914 0.0438787 0.577315 0.0694515 0.610483 0.101684L4.8951 4.25504C4.92835 4.28719 4.95473 4.32539 4.97273 4.36744C4.99073 4.40949 5 4.45456 5 4.50009C5 4.54562 4.99073 4.59069 4.97273 4.63274C4.95473 4.67479 4.92835 4.71299 4.8951 4.74514L0.610483 8.8985C0.543438 8.96349 0.452505 9 0.35769 9C0.262874 9 0.171942 8.96349 0.104897 8.8985C0.0378524 8.83351 0.000186941 8.74536 0.000186941 8.65345C0.000186941 8.56154 0.0378524 8.47339 0.104897 8.4084L4.13744 4.50009L0.104897 0.59178C0.0716462 0.559629 0.0452651 0.521435 0.0272651 0.479386C0.00926505 0.437337 0 0.392258 0 0.346732C0 0.301206 0.00926505 0.256128 0.0272651 0.214078C0.0452651 0.172029 0.0716462 0.133835 0.104897 0.101684Z" fill="#666666"/>
+                </svg>
+             </li>
+             {% assign breadcrumbs_text = breadcrumbs_text | append: '&$#' | append: link.title  %}
+             {% assign breadcrumbs_text = breadcrumbs_text | append: '#$&' | append: collection.url %}
+             {% assign breadcrumbs_mob_text = link.title | append: '#$&' | append: collection.url  %}
+           {% endif %}
+        {% endfor %}
+        
+        {% assign child_list_handle = link.title | handle %}
+        {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 and is_parent == 1 %}
+    
+           {% for child_link in linklists[child_list_handle].links %}
+              
+            {% for collection in product.collections %}
+               {% if collection.url == child_link.url and is_child_1 == 0 %}
+                 {% assign is_child_1 = 1 %}
+                 <li class="breadcrumbs__item">
+                    <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ child_link.title }}</a>
+                    <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.104897 0.101684C0.138064 0.0694515 0.177465 0.0438787 0.220844 0.0264301C0.264222 0.00898154 0.310725 0 0.35769 0C0.404654 0 0.451158 0.00898154 0.494536 0.0264301C0.537914 0.0438787 0.577315 0.0694515 0.610483 0.101684L4.8951 4.25504C4.92835 4.28719 4.95473 4.32539 4.97273 4.36744C4.99073 4.40949 5 4.45456 5 4.50009C5 4.54562 4.99073 4.59069 4.97273 4.63274C4.95473 4.67479 4.92835 4.71299 4.8951 4.74514L0.610483 8.8985C0.543438 8.96349 0.452505 9 0.35769 9C0.262874 9 0.171942 8.96349 0.104897 8.8985C0.0378524 8.83351 0.000186941 8.74536 0.000186941 8.65345C0.000186941 8.56154 0.0378524 8.47339 0.104897 8.4084L4.13744 4.50009L0.104897 0.59178C0.0716462 0.559629 0.0452651 0.521435 0.0272651 0.479386C0.00926505 0.437337 0 0.392258 0 0.346732C0 0.301206 0.00926505 0.256128 0.0272651 0.214078C0.0452651 0.172029 0.0716462 0.133835 0.104897 0.101684Z" fill="#666666"/>
+                    </svg>
+                 </li>
+                 {% assign breadcrumbs_text = breadcrumbs_text | append: '&$#' | append: child_link.title  %}
+                 {% assign breadcrumbs_text = breadcrumbs_text | append: '#$&' | append: collection.url  %}
+                 {% assign breadcrumbs_mob_text = child_link.title | append: '#$&' | append: collection.url  %}
+               {% endif %}
+            {% endfor %}
+             
+             {% assign grand_child_list_handle = child_link.title | handle %}
+             {% if linklists[grand_child_list_handle] and linklists[grand_child_list_handle].links.size > 0 and is_child_1 == 1 %}
+               
+                {% for grand_child_link in linklists[grand_child_list_handle].links %}
+
+                  {% for collection in product.collections %}
+                     {% if collection.url == grand_child_link.url and is_child_2 == 0 %}
+                       {% assign is_child_2 = 1 %}
+                       <li class="breadcrumbs__item">
+                          <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ grand_child_link.title }}</a>
+                          <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.104897 0.101684C0.138064 0.0694515 0.177465 0.0438787 0.220844 0.0264301C0.264222 0.00898154 0.310725 0 0.35769 0C0.404654 0 0.451158 0.00898154 0.494536 0.0264301C0.537914 0.0438787 0.577315 0.0694515 0.610483 0.101684L4.8951 4.25504C4.92835 4.28719 4.95473 4.32539 4.97273 4.36744C4.99073 4.40949 5 4.45456 5 4.50009C5 4.54562 4.99073 4.59069 4.97273 4.63274C4.95473 4.67479 4.92835 4.71299 4.8951 4.74514L0.610483 8.8985C0.543438 8.96349 0.452505 9 0.35769 9C0.262874 9 0.171942 8.96349 0.104897 8.8985C0.0378524 8.83351 0.000186941 8.74536 0.000186941 8.65345C0.000186941 8.56154 0.0378524 8.47339 0.104897 8.4084L4.13744 4.50009L0.104897 0.59178C0.0716462 0.559629 0.0452651 0.521435 0.0272651 0.479386C0.00926505 0.437337 0 0.392258 0 0.346732C0 0.301206 0.00926505 0.256128 0.0272651 0.214078C0.0452651 0.172029 0.0716462 0.133835 0.104897 0.101684Z" fill="#666666"/>
+                          </svg>
+                       </li>
+                       {% assign breadcrumbs_text = breadcrumbs_text | append: '&$#' | append: grand_child_link.title  %}
+                       {% assign breadcrumbs_text = breadcrumbs_text | append: '#$&' | append: collection.url  %}
+                       {% assign breadcrumbs_mob_text = grand_child_link.title | append: '#$&' | append: collection.url  %}
+                     {% endif %}
+                  {% endfor %}
+                  
+                {% endfor %}
+
+            {% endif %}
+             
+          {% endfor %}
+          
+        {% endif %}
+        
+      {% endfor %}
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ product.url }}" aria-current="page">{{ product.title }}</a>
+        </li>
+        {% assign breadcrumbs_text = breadcrumbs_text | append: '&$#' | append: product.title  %}
+        {% assign breadcrumbs_text = breadcrumbs_text | append: '#$&' | append: product.url  %}
+                               
+      {%- when 'collection' and collection.handle -%}
+        {%- if current_tags -%}
+          <li class="breadcrumbs__item">
+            {{ collection.title | link_to: collection.url }}
+          </li>
+          <li class="breadcrumbs__item">
+            {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+            <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + "}}</a>
+          </li>
+        {%- else -%}
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+          </li>
+        {%- endif -%}
+      {%- when 'blog' -%}
+        {%- if current_tags -%}
+          <li class="breadcrumbs__item">
+            {{ blog.title | link_to: blog.url }}
+          </li>
+          <li class="breadcrumbs__item">
+            {%- capture tag_url -%}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+            <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + " }}</a>
+          </li>
+        {%- else -%}
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="{{ blog.url }}" aria-current="page">{{ blog.title }}</a>
+          </li>
+        {%- endif -%}
+      {%- when 'article' -%}
+        <li class="breadcrumbs__item">
+          {{ blog.title | link_to: blog.url }}
+        </li>
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+        </li>
+      {%- else -%}
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ request.path }}" aria-current="page">{{ page_title }}</a>
+        </li>
+    {%- endcase -%}
+  </ol>
+  <ol class="breadcrumbs__list mobile">
+     {% assign breadcrumbs_mob_arr = breadcrumbs_mob_text | split: '&$#' %}
+     {% for br_mob_obj in breadcrumbs_mob_arr %}
+         {% assign br_mob_title = br_mob_obj | split: '#$&' | first %}
+         {% assign br_mob_link = br_mob_obj | split: '#$&' | last %}
+            <li class="breadcrumbs__item">
+              <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8951 8.89832C4.86194 8.93055 4.82253 8.95612 4.77916 8.97357C4.73578 8.99102 4.68927 9 4.64231 9C4.59535 9 4.54884 8.99102 4.50546 8.97357C4.46209 8.95612 4.42268 8.93055 4.38952 8.89832L0.104897 4.74496C0.0716465 4.71281 0.0452657 4.67461 0.0272657 4.63256C0.00926573 4.59051 3.49116e-07 4.54543 3.53096e-07 4.49991C3.57076e-07 4.45438 0.00926575 4.4093 0.0272658 4.36726C0.0452658 4.32521 0.0716466 4.28701 0.104898 4.25486L4.38952 0.101502C4.45656 0.0365115 4.5475 2.63113e-07 4.64231 2.71402e-07C4.73713 2.79691e-07 4.82806 0.0365115 4.8951 0.101502C4.96215 0.166493 4.99981 0.25464 4.99981 0.346551C4.99981 0.438461 4.96215 0.526608 4.8951 0.591599L0.862561 4.49991L4.8951 8.40822C4.92835 8.44037 4.95473 8.47856 4.97273 8.52061C4.99073 8.56266 5 8.60774 5 8.65327C5 8.69879 4.99073 8.74387 4.97273 8.78592C4.95473 8.82797 4.92835 8.86617 4.8951 8.89832V8.89832Z" fill="#666666"/>
+              </svg>
+              <a class="breadcrumbs__link" href="{{ br_mob_link }}">{{ br_mob_title }}</a>
+            </li>
+     {% endfor %} 
+  </ol>
+</nav>
+{% assign breadcrumbs_arr = breadcrumbs_text | split: '&$#' %}
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [ 
+         {% for br_obj in breadcrumbs_arr %}{% assign br_title = br_obj | split: '#$&' | first %} {% assign br_link = br_obj | split: '#$&' | last %} {% if forloop.index > 1 %}{{ "," }}{% endif %}{
+              "@type": "ListItem",
+              "position": {{ forloop.index }},
+              "name": "{{ br_title }}",
+              "item": "https://www.buildmat.com.au{{ br_link }}"
+           }
+        {% endfor %} 
+      ]
+    }
+</script>
+{%- endunless -%}

@@ -1,0 +1,38 @@
+
+<div class="collection-list-revit-item">
+  
+  <h1 class="collection-revit-item__title">{{ collection.title | escape }}</h1>
+  <div class="collection-revit-item__description"> {{ settings.sub_heading | strip_html }} </div>
+  
+  <div class="collection-revit-item__files">
+    
+    {%- if collection.products -%}
+      <div class="revit-item-header">
+          <div class="revit-item__header">
+            <div class="col-revit-product_name"></div>
+            <div class="col-revit-product_config">Bowl Configuration</div>
+            <div class="col-revit-product_size">BowL size (Excluding Lip)</div>
+            <div class="col-revit-product_download"></div>
+          </div>
+      </div>
+    	
+      <div class="revit-item-list">
+        {%- for product in collection.products -%}
+        	{%- if product.metafields.my_fields.revit -%}
+            	{%- render 'product-revit-item', product: product, no_actions: true -%}
+        	{%- endif -%}
+        {%- endfor -%}
+      </div>
+    
+    {%- endif -%}
+
+    {%- if collection.description -%}
+        <div class="revit-item-description page-content">
+          {{ collection.description | html }}
+        </div>
+    {%- endif -%}
+    
+  </div>
+  
+ 
+</div>

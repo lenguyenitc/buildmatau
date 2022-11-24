@@ -1,0 +1,31 @@
+
+<div class="page-width page-content">
+  <div class="template-revit-list" data-view="list">
+    {%- assign collection = collections[section.settings.collection] -%}
+    {%- render 'collection-list-revit-item', collection: collection,  settings : section.settings -%}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "List Revit Files",
+    "settings": [
+	   {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "sub_heading",
+        "label": "Sub Heading"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

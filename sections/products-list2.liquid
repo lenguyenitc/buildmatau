@@ -1,0 +1,212 @@
+{% capture classes_mode %}
+{% if content_for_header contains "previewBarInjector.init();" %}
+__preview_mode
+{% elsif content_for_header contains "Shopify.designMode" %}
+__customizer_mode
+{% else %}
+__live_mode
+{% endif %} 
+{% endcapture %} 
+
+{% # assign ColourFilterList = "Brushed Stainless Steel, Brushed Copper, Brushed Gunmetal, Brushed Brass Gold" | split: ", " %}
+{% assign ColourFilterList = "Brushed Stainless Steel, Brushed Gunmetal, Brushed Brass Gold" | split: ", " %} 
+{% assign featuresList = "1.5mm Thick Stainless Steel : ficon--1.svg, Under or Over Mount Compatible : ficon--2.svg, Anti Condensation Paint Underneath : ficon--3.svg, Sound Deadening Pads : ficon--4.svg, 304 Grade Stainless Steel : ficon--5.svg, Hand Welded not pressed : ficon--6.svg" | split: ", " %}
+
+{% capture ColourFilterListWithUrl___blackup %}Brushed Stainless Steel : {{ section.settings.steel_colour_url }}, Brushed Copper : {{ section.settings.copper_colour_url }}, Brushed Gunmetal : {{ section.settings.gunmetal_colour_url }}, Brushed Brass Gold : {{ section.settings.brass_gold_colour_url }}{% endcapture %}
+
+{% capture ColourFilterListWithUrl %}Stainless Steel : {{ section.settings.steel_colour_url }} : {{ section.settings.steel_image | img_url: '300x'  }}, Brushed Gunmetal : {{ section.settings.gunmetal_colour_url }} : {{ section.settings.gunmetal_image | img_url: '300x' }}, Brushed Brass Gold : {{ section.settings.brass_gold_colour_url }} : {{ section.settings.gold_image | img_url: '300x' }}{% endcapture %}
+{% assign ColourFilterListWithUrlArray = ColourFilterListWithUrl | split: ", " %}
+
+<div style="height: 80px;"></div> <!-- space top -->
+
+{%- render 'product-list-json-schema', section: section -%}
+
+<section class="page-section page-products_list"> 
+  <div class="subsection subsection2">
+    <div class="section-container">
+
+      <div class="page-width">
+        
+        <div class="page-ss-heading text-center">
+          <h1 class="page-ss-heading__heading-text">{{ section.settings.ss_heading }}</h1>
+          <div class="page-ss-heading__sub-heading-text" style="font-size: 16px; width: auto;">{{ section.settings.ss_sub_heading }}</div>
+        </div> <!-- .page-ss-heading -->
+        
+        {% if section.settings.enable_filter_colour == true %}
+
+        <div class="products__filter-color-select">
+<!--           <label class="filter-by-colour-list__label">Select a colour to see our range:</label> -->
+          <ul class="filter-by-colour-list">
+            {% for fItem in ColourFilterListWithUrlArray %}
+            {% assign fArr = fItem | split: " : " %}
+            {%- assign colour = fArr[0] -%}
+            {%- assign fUrl = fArr[1] -%}
+            {%- assign fImg = fArr[2] -%}
+
+            {% assign filterName = colour | downcase | replace: " ", "-" %}
+            {% if filterName == section.settings.colour_active_default %} 
+              {% assign filterClassActive = '__active' %}
+            {% else %} 
+              {% assign filterClassActive = '' %}
+            {% endif %}
+            <li class="{{ filterClassActive }}" data-icon-class="{{ filterName }}" title="{{ colour }}">
+              <label class="filter-by-colour-list__label">{{ colour }}</label>
+              <a href="{{ fUrl }}">
+                <!-- {{ forloop.index }} -->
+                {% if fImg != blank %} 
+                  <span class="__icon-class __icon-{{ filterName }} __icon-filter-img">
+                    <img src="{{ fImg }}" alt="{{ colour }}" class="img_filter"/>
+                  </span>
+                {% else %} 
+                  <span class="__icon-class __icon-{{ filterName }}"></span>
+                {% endif %}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div> <!-- .products__filter-color-select -->
+
+        {% endif %}
+
+      </div> 
+
+      <div class="page-width">
+        <div class="features-inline">
+          <div class="features-inline__inner">
+            <ul class="features-inline__ul">
+              {% for f_item in featuresList %} {% assign fitem_arr = f_item | split: " : " %}
+              <li class="features-inline__item">
+                {{ fitem_arr[1] | asset_url | img_tag: 'f-icon' }}
+                <div class="f-name">{{ fitem_arr[0] }}</div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div> <!-- .features-inline -->
+      </div>
+
+      <div class="page-width">
+        {% render 'product-list-table-block', section: section %}
+      </div>
+
+    </div> 
+  </div>
+</section>
+{% schema %}
+
+{
+  "name": "Section Products 2",
+  "settings": [ 
+    {
+      "type": "text",
+      "id": "ss_heading",
+      "label": "Heading"
+    }, 
+    {
+      "type": "textarea",
+      "id": "ss_sub_heading",
+      "label": "Subheadline"
+    }, {
+      "type": "checkbox",
+      "id": "enable_filter_colour",
+      "label": "Enable Filter Colour"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_features",
+      "label": "Enable Features"
+    }, 
+    {
+      "type": "url",
+      "id": "steel_colour_url",
+      "label": "Select Steel Page"
+    },
+    {
+      "type": "url",
+      "id": "copper_colour_url",
+      "label": "Select Copper Page"
+    },
+    {
+      "type": "url",
+      "id": "gunmetal_colour_url",
+      "label": "Select Gunmetal Page"
+    },
+    {
+      "type": "url",
+      "id": "brass_gold_colour_url",
+      "label": "Select Brass Gold Page"
+    },
+      {
+      "type": "image_picker",
+      "id": "steel_image",
+      "label": "Steel Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "gunmetal_image",
+      "label": "Gunmetal Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "gold_image",
+      "label": "Gold Image"
+    },
+    {
+      "type": "select",
+      "id": "colour_active_default",
+      "label": "Colour Active Default",
+      "options": [
+         {
+          "value": "stainless-steel",
+          "label": "Stainless Steel"
+        },
+        {
+          "value": "brushed-copper",
+          "label": "Brushed Copper"
+        },
+        {
+          "value": "brushed-gunmetal",
+          "label": "Brushed Gunmetal"
+        },
+        {
+          "value": "brushed-brass-gold",
+          "label": "Brushed Brass Gold"
+        }
+      ],
+      "default": "stainless-steel"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Data Json)"
+    },
+    {
+      "type": "text",
+      "id": "text_schema",
+      "label": "Alt Image (Data Json)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product Item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }, {
+          "type": "image_picker",
+          "id": "p_image",
+          "label": "Image"
+        }, {
+          "type": "text",
+          "id": "p_moniker_override",
+          "label": "Moniker Override"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

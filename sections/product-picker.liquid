@@ -1,0 +1,138 @@
+{% style %}
+.product-picker-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding: 64px 0 34px;
+}
+
+.product-picker-{{ section.id }} .product-picker__heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.product-picker-{{ section.id }} .product-picker__heading h4,
+.product-picker-{{ section.id }} .product-picker__heading a {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 16px 0 0;
+}
+
+.product-picker-{{ section.id }} .product-picker__heading h4 {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.product-picker-{{ section.id }} .product-picker__heading a {
+  font-weight: bold !important;
+  color: #03555F;
+}
+
+.product-picker-{{ section.id }} .product-picker__heading .heading-line {
+  width: 100%;
+  border-bottom: 1px solid #CADFDC;
+}
+
+.product-picker-{{ section.id }} .product-picker__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -8px;
+}
+
+.product-picker-{{ section.id }} .product-picker__list .product-picker-item {
+  padding: 0 8px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  width: calc(100% /4);
+}
+@media(max-width: 768px) {}
+@media(max-width: 554px) {
+  .product-picker-{{ section.id }} { padding: 32px 0 2px; }
+  .product-picker-{{ section.id }} .product-picker__heading { flex-direction: column; }
+  .product-picker-{{ section.id }} .product-picker__heading h4 { 
+    margin-bottom: 4px;                                     
+    white-space: initial;
+    margin-right:0;
+    text-align: center;
+  }
+  .product-picker-{{ section.id }} .product-picker__heading .heading-line { margin-top: 12px; }
+  .product-picker-{{ section.id }} .product-picker__list .product-picker-item { width: calc(100% / 2) }
+}
+{% endstyle %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="product-picker-section" 
+  class="product-picker-section product-picker-{{ section.id }} {{ section.class }}">
+  <div class="content-container">
+    <div class="product-picker__inner">
+      <div class="product-picker__heading">
+        <h4>{{ section.settings.label }}</h4>
+
+        {% if section.settings.see_all %}
+        <a href="{{ section.settings.see_all_url }}" target="_blank">See All</a>
+        {% endif %}
+        
+        <span class="heading-line"></span>
+      </div> <!-- .product-picker__heading -->
+      <div class="product-picker__list">
+        {% for block in section.blocks %}
+          {% render 'product-picker-item' | block: block %}
+        {% endfor %}
+      </div>
+    </div> <!-- .roduct-picker__inner -->
+  </div>
+</div> <!-- .product-picker-section -->
+
+{% schema %}
+{
+  "name": "Product Picker",
+  "class": "product-picker-section--container",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "info": "Enter label",
+      "default": "Meet Our Best Sellers"
+    },
+    {
+      "type": "checkbox",
+      "id": "see_all",
+      "label": "Enable See All",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "see_all_url",
+      "label": "See All Url",
+      "info": "Select see all url"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF",
+      "info": "Select background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product-picker-item",
+      "name": "Product Picker Item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Select product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

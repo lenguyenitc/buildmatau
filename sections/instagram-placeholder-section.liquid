@@ -1,0 +1,179 @@
+{% style %}
+.instagram-placeholder-section-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding: 80px 0 50px 0;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading h4,
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading a {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 16px 0 0;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading h4 {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading a {
+  font-weight: bold !important;
+  color: #03555F;
+  display: flex;
+  align-items: center;
+  text-transform: initial;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading a svg {
+  margin-right: 8px;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading .heading-line {
+  width: 100%;
+  border-bottom: 1px solid #CADFDC;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -4px;
+}
+
+.instagram-placeholder-section-{{ section.id }} .instagram-placeholder-item {
+  padding: 0 4px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  width: calc(100% / 6);
+}
+@media(max-width: 768px) {
+  .instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5em;
+  }
+  .instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading .heading-line {
+    margin-top:12px;
+  }
+  .instagram-placeholder-section-{{ section.id }} .instagram-placeholder-item {
+    width: calc(100% / 4);
+  }
+  .instagram-placeholder-section-{{ section.id }} .instagram-placeholder-section__heading h4 {
+    white-space: break-spaces;
+    margin:0 0 5px 0;
+    line-height:28px;
+  }
+
+}
+@media(max-width:600px) {
+  .instagram-placeholder-section-{{ section.id }} .instagram-placeholder-item {
+    width: calc(100% / 3);
+  }
+  .instagram-placeholder-section-{{ section.id }} {
+    padding: 32px 0 25px 0;
+  }
+}
+
+{% endstyle %}
+
+{% javascript %}
+  
+{% endjavascript %}
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    $('.instagram-placeholder-section').magnificPopup({
+    delegate: 'span', // child items selector, by clicking on it popup will open
+    type: 'image'
+    // other options
+  });
+  })
+</script>
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="instagram-placeholder-section" 
+  class="instagram-placeholder-section instagram-placeholder-section-{{ section.id }} {{ section.class }}">
+  <div class="content-container">
+    <div class="instagram-placeholder-section__inner">
+    
+      <div class="instagram-placeholder-section__heading">
+        <h4>{{ section.settings.label }}</h4>
+        <a href="{{ section.settings.instagram_url }}" target="_blank">
+          <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M10 2C7.28625 2 6.945 2.0125 5.87875 2.06C4.8125 2.11 4.08625 2.2775 3.45 2.525C2.78262 2.77602 2.17811 3.16978 1.67875 3.67875C1.1701 4.17837 0.776384 4.7828 0.525 5.45C0.2775 6.085 0.10875 6.8125 0.06 7.875C0.0125 8.94375 0 9.28375 0 12.0013C0 14.7163 0.0125 15.0563 0.06 16.1225C0.11 17.1875 0.2775 17.9137 0.525 18.55C0.78125 19.2075 1.1225 19.765 1.67875 20.3212C2.23375 20.8775 2.79125 21.22 3.44875 21.475C4.08625 21.7225 4.81125 21.8912 5.87625 21.94C6.94375 21.9875 7.28375 22 10 22C12.7163 22 13.055 21.9875 14.1225 21.94C15.1863 21.89 15.915 21.7225 16.5513 21.475C17.2182 21.2239 17.8223 20.8301 18.3212 20.3212C18.8775 19.765 19.2188 19.2075 19.475 18.55C19.7213 17.9137 19.89 17.1875 19.94 16.1225C19.9875 15.0563 20 14.7163 20 12C20 9.28375 19.9875 8.94375 19.94 7.87625C19.89 6.8125 19.7213 6.085 19.475 5.45C19.2237 4.78278 18.8299 4.17834 18.3212 3.67875C17.822 3.16959 17.2175 2.77581 16.55 2.525C15.9125 2.2775 15.185 2.10875 14.1213 2.06C13.0538 2.0125 12.715 2 9.9975 2H10.0013H10ZM9.10375 3.8025H10.0013C12.6713 3.8025 12.9875 3.81125 14.0413 3.86C15.0162 3.90375 15.5462 4.0675 15.8988 4.20375C16.365 4.385 16.6987 4.6025 17.0487 4.9525C17.3988 5.3025 17.615 5.635 17.7963 6.1025C17.9338 6.45375 18.0963 6.98375 18.14 7.95875C18.1887 9.0125 18.1987 9.32875 18.1987 11.9975C18.1987 14.6663 18.1887 14.9837 18.14 16.0375C18.0963 17.0125 17.9325 17.5413 17.7963 17.8938C17.6359 18.3279 17.38 18.7205 17.0475 19.0425C16.6975 19.3925 16.365 19.6088 15.8975 19.79C15.5475 19.9275 15.0175 20.09 14.0413 20.135C12.9875 20.1825 12.6713 20.1938 10.0013 20.1938C7.33125 20.1938 7.01375 20.1825 5.96 20.135C4.985 20.09 4.45625 19.9275 4.10375 19.79C3.66937 19.6299 3.27641 19.3745 2.95375 19.0425C2.62094 18.72 2.36465 18.3271 2.20375 17.8925C2.0675 17.5412 1.90375 17.0113 1.86 16.0363C1.8125 14.9825 1.8025 14.6663 1.8025 11.995C1.8025 9.325 1.8125 9.01 1.86 7.95625C1.905 6.98125 2.0675 6.45125 2.205 6.09875C2.38625 5.6325 2.60375 5.29875 2.95375 4.94875C3.30375 4.59875 3.63625 4.3825 4.10375 4.20125C4.45625 4.06375 4.985 3.90125 5.96 3.85625C6.8825 3.81375 7.24 3.80125 9.10375 3.8V3.8025ZM15.3387 5.4625C15.1812 5.4625 15.0251 5.49354 14.8795 5.55384C14.7339 5.61415 14.6017 5.70254 14.4902 5.81397C14.3788 5.9254 14.2904 6.05769 14.2301 6.20328C14.1698 6.34887 14.1388 6.50491 14.1388 6.6625C14.1388 6.82009 14.1698 6.97613 14.2301 7.12172C14.2904 7.26731 14.3788 7.3996 14.4902 7.51103C14.6017 7.62246 14.7339 7.71085 14.8795 7.77116C15.0251 7.83146 15.1812 7.8625 15.3387 7.8625C15.657 7.8625 15.9622 7.73607 16.1873 7.51103C16.4123 7.28598 16.5387 6.98076 16.5387 6.6625C16.5387 6.34424 16.4123 6.03902 16.1873 5.81397C15.9622 5.58893 15.657 5.4625 15.3387 5.4625ZM10.0013 6.865C9.32009 6.85437 8.64362 6.97936 8.01122 7.23268C7.37883 7.486 6.80314 7.86259 6.31769 8.34053C5.83223 8.81847 5.4467 9.38821 5.18355 10.0166C4.9204 10.6449 4.78488 11.3194 4.78488 12.0006C4.78488 12.6819 4.9204 13.3563 5.18355 13.9847C5.4467 14.613 5.83223 15.1828 6.31769 15.6607C6.80314 16.1387 7.37883 16.5153 8.01122 16.7686C8.64362 17.0219 9.32009 17.1469 10.0013 17.1363C11.3494 17.1152 12.6353 16.5649 13.5812 15.6041C14.5272 14.6432 15.0574 13.349 15.0574 12.0006C15.0574 10.6523 14.5272 9.35802 13.5812 8.39719C12.6353 7.43636 11.3494 6.88603 10.0013 6.865ZM10.0013 8.66625C10.8854 8.66625 11.7334 9.01748 12.3586 9.64268C12.9838 10.2679 13.335 11.1158 13.335 12C13.335 12.8842 12.9838 13.7321 12.3586 14.3573C11.7334 14.9825 10.8854 15.3337 10.0013 15.3337C9.11709 15.3337 8.26913 14.9825 7.64393 14.3573C7.01873 13.7321 6.6675 12.8842 6.6675 12C6.6675 11.1158 7.01873 10.2679 7.64393 9.64268C8.26913 9.01748 9.11709 8.66625 10.0013 8.66625Z" fill="#03555F"/> </svg>
+          {{ section.settings.instagram_name }}
+        </a>
+        <span class="heading-line"></span>
+      </div> <!-- .instagram-placeholder-section__heading -->
+
+      <div class="instagram-placeholder-section__gallery">
+      {% for block in section.blocks %}
+        {% render 'ins-image-item' | block: block %}
+      {% endfor %}
+      </div> <!-- .instagram-placeholder-section__gallery -->
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Instagram Placeholder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "info": "Enter label",
+      "default": "Explore Categories"
+    },
+    {
+      "type": "text",
+      "id": "instagram_name",
+      "label": "Instagram Name",
+      "info": "Instagram name"
+    },
+    {
+      "type": "text",
+      "id": "instagram_url",
+      "label": "Instagram Url",
+      "info": "Enter your Instagram Url"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF",
+      "info": "Select background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ins-image-item",
+      "name": "Image Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Url"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

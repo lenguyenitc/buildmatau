@@ -1,0 +1,41 @@
+{%- assign article = articles[block.settings.article] -%}
+
+{% style %}
+.article-picker-item {}
+.article-picker-item__inner {
+  display: flex;
+}
+
+.article-picker-item__inner .__icon {
+  margin-right: 8px;
+}
+
+.article-picker-item__inner .article-title {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5em;
+  transition: .3s ease;
+  margin-bottom: 0;
+}
+
+.article-picker-item__inner .article-title:hover {
+  opacity: .7;
+}
+
+.article-picker-item__inner .article-title a {
+  color: #004F59;
+}
+{% endstyle %}
+
+<div class="article-picker-item">
+  <div class="article-picker-item__inner">
+    <span class="__icon">
+      <svg width="11" height="21" viewBox="0 0 11 21" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_3213_19117)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M-0.000893199 11.1288C-0.000893211 11.2614 0.0517849 11.3886 0.145553 11.4824C0.239321 11.5761 0.366498 11.6288 0.499107 11.6288L9.29211 11.6288L6.14511 14.7748C6.09862 14.8213 6.06174 14.8765 6.03658 14.9372C6.01142 14.998 5.99847 15.0631 5.99847 15.1288C5.99847 15.1946 6.01142 15.2597 6.03658 15.3204C6.06174 15.3811 6.09862 15.4363 6.14511 15.4828C6.19159 15.5293 6.24678 15.5662 6.30752 15.5913C6.36826 15.6165 6.43336 15.6295 6.49911 15.6295C6.56485 15.6295 6.62995 15.6165 6.69069 15.5913C6.75143 15.5662 6.80662 15.5293 6.85311 15.4828L10.8531 11.4828C10.8997 11.4364 10.9366 11.3812 10.9618 11.3205C10.987 11.2597 11 11.1946 11 11.1288C11 11.0631 10.987 10.9979 10.9618 10.9372C10.9366 10.8764 10.8997 10.8213 10.8531 10.7748L6.85311 6.77482C6.80662 6.72834 6.75143 6.69146 6.69069 6.6663C6.62995 6.64114 6.56485 6.62819 6.49911 6.62819C6.43336 6.62819 6.36826 6.64114 6.30752 6.6663C6.24678 6.69146 6.19159 6.72834 6.14511 6.77482C6.09862 6.82131 6.06174 6.8765 6.03658 6.93724C6.01142 6.99798 5.99848 7.06308 5.99848 7.12882C5.99848 7.19457 6.01142 7.25967 6.03658 7.32041C6.06174 7.38115 6.09862 7.43634 6.14511 7.48282L9.29211 10.6288L0.499107 10.6288C0.366498 10.6288 0.239321 10.6815 0.145553 10.7753C0.0517849 10.869 -0.000893188 10.9962 -0.000893199 11.1288Z" fill="#004F59"/> </g> <defs> <clipPath id="clip0_3213_19117"> <rect width="11" height="21" fill="white"/> </clipPath> </defs> </svg>
+    </span>
+    <h4 class="article-title">
+      <a href="{{ article.url }}">{{ article.title }}</a>
+    </h4>
+  </div>
+</div> <!-- .article-picker-item -->

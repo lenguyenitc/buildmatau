@@ -1,0 +1,64 @@
+{% assign product = all_products[block.settings.product] %}
+
+{% style %}
+.product-picker-section .product-picker-item .product-picker-item__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-picker-section .product-picker-item .product__thumb {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  background: #FAFAFA;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.product-picker-section .product-picker-item .product__thumb img {
+  width: 100%;
+}
+
+.product-picker-section .product-picker-item .product__title {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #314644;
+  margin-bottom: 8px;
+}
+
+.product-picker-section .product-picker-item .product__price {}
+.product-picker-section .product-picker-item .prod-price {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: #03555F;
+}
+{% endstyle %}
+
+<div class="product-picker-item">
+  <div class="product-picker-item__inner">
+    <a href="{{ product.url }}" class="product__thumb">
+      {{ product.featured_image | collection_img_url | img_tag  }}
+      {% if product.compare_at_price > product.price %}
+      <span class="sale-badge">Sale</span>
+      {% endif %}
+    </a>
+    <div class="product__entry">
+      <h4 class="product__title">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h4>
+      <div class="product__price">
+        <div class="prod-price">
+          <span>{{ product.price | money | remove: '.00' }}</span>
+          {% if product.compare_at_price > product.price %}
+            <span class="prod-c-price">{{ product.compare_at_price | money | remove: '.00' }}</span>
+            <span class="sale-text">Sale</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div> <!-- .product-picker-item__inner -->
+</div> <!-- .product-picker-item -->

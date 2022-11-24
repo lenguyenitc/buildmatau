@@ -1,0 +1,32 @@
+<div class="revit-item__content" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+  <div class="col-revit-product_name">
+    
+    <div class="product_revit-image">
+    	{%- liquid
+          assign preview_image = product.featured_media.preview_image
+          assign img_url = preview_image | img_url: '200px'
+        -%}
+      <div class="product_revit-image__box">
+           <img class="grid-product__image lazyloaded"
+             src="{{ preview_image | img_url: '200px' }}"
+             alt="{{ preview_image.alt | escape }}">
+      </div>
+ 
+    </div>
+    
+    <a href="{{ product.url }}" class="product_revit-link">
+      {{ product.title }}
+    </a>
+    
+  </div>
+  <div class="col-revit-product_config"> {{ product.metafields.my_fields.product_configuration }} </div>
+  <div class="col-revit-product_size"> {{ product.metafields.my_fields.product_bowl_size }} </div>
+  <div class="col-revit-product_download">
+  
+    <a href="{{ product.metafields.my_fields.revit | file_url }}" class="revit-file-download" target="_blank" download>
+      DOWNLOAD .RVT
+      <img src="{{ 'rvt.svg' | asset_url }}" alt="icon download rvt">
+    </a>
+  
+  </div>
+</div>

@@ -1,0 +1,128 @@
+{% style %}
+.articles-picker-section-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding: 10px 0 34px;
+}
+
+.articles-picker-section-{{ section.id }} .articles-picker-section__heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.articles-picker-section-{{ section.id }} .articles-picker-section__heading h4,
+.articles-picker-section-{{ section.id }} .articles-picker-section__heading a {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 16px 0 0;
+}
+
+.articles-picker-section-{{ section.id }} .articles-picker-section__heading h4 {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.articles-picker-section-{{ section.id }} .articles-picker-section__heading a {
+  font-weight: bold !important;
+  color: #03555F;
+}
+
+.articles-picker-section-{{ section.id }} .articles-picker__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.articles-picker-section-{{ section.id }} .article-picker-item {
+  padding: 0 16px;
+  margin-bottom: 32px;
+  box-sizing: border-box;
+  width: calc(100% / 4);
+}
+@media(max-width:768px) {
+  .articles-picker-section-{{ section.id }} .article-picker-item {
+    width: calc(100%);
+  }
+  .articles-picker-section-{{ section.id }} .article-picker-item:last-child {
+    margin-bottom: 0;
+  }
+}
+@media(max-width:600px) {
+  .articles-picker-section-{{ section.id }} .articles-picker-section__heading {
+    justify-content: center;
+    
+  }
+  .articles-picker-section-{{ section.id }} .articles-picker-section__heading h4 {
+    margin-right:0;
+  }
+  .articles-picker-section-{{ section.id }} {
+    padding: 20px 0 32px;
+  }
+
+}  
+{% endstyle %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="articles-picker-section" 
+  class="articles-picker-section articles-picker-section-{{ section.id }} {{ section.class }}" >
+  <div class="content-container">
+    <div class="articles-picker-section__inner">
+      <div class="articles-picker-section__heading">
+        <h4>{{ section.settings.label }}</h4>
+
+        {% if section.settings.see_all %}
+        <a href="{{ section.settings.see_all_url }}" target="_blank">See All Posts</a>
+        {% endif %}
+        
+      </div> <!-- .articles-picker-section__heading -->
+
+      <div class="articles-picker__list">
+      {% for block in section.blocks %}
+        {% render 'article-picker-item' | block: block %}
+      {% endfor %}
+      </div> <!-- .articles-picker__list -->
+    </div> <!-- .articles-picker-section__inner -->
+  </div>
+</div> <!-- .articles-picker-section -->
+
+{% schema %}
+{
+  "name": "Articles Picker Section",
+  "class": "articles-picker-section--container",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "info": "Enter label",
+      "default": "Meet Our Best Sellers"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF",
+      "info": "Select background color"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Articles Picker Item",
+      "type": "articles-picker-item",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Select article"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

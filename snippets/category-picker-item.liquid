@@ -1,0 +1,48 @@
+{% assign imageCollection = block.settings.collection_image %}
+
+{% style %}
+.category-picker-section .category-picker-item {
+  
+}
+
+.category-picker-section .category-picker-item .category-picker-item__inner {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.category-picker-section .category-picker-item a.__image {
+  margin-bottom: 16px;
+  display: inline-block;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.category-picker-section .category-picker-item a.__label {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 125%;
+  color: #314644;
+}
+@media(max-width: 768px) {}
+@media(max-width: 554px) {
+  .category-picker-section .category-picker-item a.__image img {
+    width: 80%;
+    object-fit: contain;
+  }
+}
+{% endstyle %}
+
+<div class="category-picker-item">
+  <div class="category-picker-item__inner">
+    <a class="__image" href="{{ block.settings.collection_url }}" target="_blank">
+      <img loading="lazy" src="{{ imageCollection | img_url: 'master' }}" alt="{{ imageCollection.alt }}" width height >
+    </a>
+    <a class="__label" href="{{ block.settings.collection_url }}" target="_blank">
+      {{ block.settings.collection_label }}
+    </a>
+  </div>
+</div> <!-- .category-picker-item -->

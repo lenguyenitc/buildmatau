@@ -1,0 +1,70 @@
+<script type="application/ld+json">
+{
+   "@context":"http://schema.org",
+   "@type":"Product",
+   "brand":{
+      "@type":"Brand",
+      "name":"Buildmat"
+   },
+   "name":"Buildmat Sinks",
+   "description":"{{ section.settings.ss_sub_heading }}",
+   "url":"{{ shop.url }}{{ page.url }}",
+   "image":{
+      "@type":"ImageObject",
+      "url":"{{ section.settings.image | img_url: '1800x800' }}",
+      "image":"{{ section.settings.image | img_url: '1800x800' }}",
+      "name":"{{ section.settings.text_schema }}",
+      "width":1800,
+      "height":800
+   },
+   "Offers":[
+      {% for block in section.blocks %}
+      
+      {%- liquid
+      	assign product = all_products[block.settings.product]
+        assign current_variant = product.selected_or_first_available_variant
+        assign days_price_valid_until = 10 | times: 86400
+  		assign gtin_option = 'gtin'
+        assign is_barcode_available = false
+        if current_variant.barcode != blank
+          assign is_barcode_available = true
+          assign gtin_string_length = current_variant.barcode | size
+          if gtin_string_length == 8 or gtin_string_length == 12 or gtin_string_length == 13 or gtin_string_length == 14
+            assign is_valid_gtin_length = true
+            assign gtin_option = gtin_option | append: gtin_string_length
+          endif
+        endif
+         
+        assign availability_text = "InStock"
+        if current_variant.inventory_quantity < 1
+           assign availability_text = 'PreOrder'
+        endif
+        unless current_variant.available
+           assign availability_text = 'OutOfStock'
+        endunless
+  
+      -%}
+      
+      {
+         "@type":"Offer",
+         "availability":"http://schema.org/{{ availability_text }}",
+         "name":{{ product.title | json }},
+         "sku":{{ current_variant.sku | json }},
+         "{{gtin_option}}": {{ current_variant.barcode | json }},
+         {%- for variant in product.variants -%}
+         
+         "price" : {{ variant.price | divided_by: 100.00 | json }},
+         "priceCurrency" : {{ cart.currency.iso_code | json }},
+         "priceValidUntil": "{{ 'now' | date: '%s' | plus: days_price_valid_until | date: '%Y-%m-%d' }}",
+         "itemCondition":"https://schema.org/NewCondition",
+         "seller":{
+            "@type":"Organization",
+            "name":{{ product.vendor | json }}
+         },
+         "url" : "{{ shop.url }}{{ product.url }}"
+         {%- endfor -%}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+   ]
+}
+</script>

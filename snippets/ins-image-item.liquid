@@ -1,0 +1,14 @@
+{% style %}
+.instagram-placeholder-item img {
+  width: 100%;
+  border-radius: 8px;
+}
+{% endstyle %}
+
+<div class="instagram-placeholder-item">
+  <div class="instagram-placeholder-item__inner">
+    <span data-fancybox="ins" data-src="{{ block.settings.image | img_url }}" href="{{ block.settings.image | img_url: 'master' }}">
+      {{ block.settings.image | img_url: "250x250", crop: 'center' | img_tag }}
+    </span>
+  </div>
+</div> <!-- .instagram-placeholder-item -->

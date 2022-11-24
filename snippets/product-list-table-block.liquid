@@ -1,0 +1,77 @@
+{% paginate collections.all.products by 1000 %}
+<table class="product-list-table">
+  <thead>
+    <tr>
+      <th width="42%"></th>
+      <th width="30%"></th>
+      <th width="15%"></th>
+      <th width="13%"></th> 
+    </tr>
+  </thead>
+  <tbody class="product-list-container">
+    {% for block in section.blocks %} 
+    {% comment %}
+    {% assign product = all_products[block.settings.product] %}
+    {% endcomment %}
+    {% assign product = collections.all.products | where: "handle", block.settings.product | first %}
+    {% assign metafields = product.metafields.my_fields %}
+
+    {% if block.settings.p_moniker_override != '' %}
+      {% assign p_moniker = block.settings.p_moniker_override %}
+    {% else %} 
+      {% assign p_moniker = metafields.moniker %}
+    {% endif %}
+
+    {% assign p_colour = product.options_by_name['Color'].values[0] %}
+    {% assign p_litres = metafields.litres.value | append: metafields.litres.unit %}
+    {% assign p_size = metafields.product_sink_size %}
+    {% assign p_weight = product.variants.first.weight | weight_with_unit %}
+    {% assign p_type = metafields.product_configuration %}
+    {% assign p_bowl_size = metafields.product_sink_size %}
+
+    {% capture data_string_meta %}size : {{ p_size }}, weight : {{ p_weight }} Boxed Weight, type : {{ p_type }}, edges : Internal Bowl Size: {{ p_bowl_size }}{% endcapture %}
+
+    {% assign metaList = data_string_meta | split : ", " %}
+    <tr class="product-list-table__item p-filter-colour-{{ p_colour | downcase | replace: " ", "-" }}" data-p-colour="{{ p_colour }}">
+      <td class="p-image">
+        <div class="p-thumb-container">
+          <a href="{{ product.url }}">
+            <img alt="{{ block.settings.title | escape }}" src="{{ block.settings.p_image | img_url: 'master' }}"/>
+          </a> 
+        </div>
+      </td>
+      <td class="p-content"> 
+        <div class="p-capacity">{{ p_litres }}</div>
+        <h4 class="p-title">
+          <a href="{{ product.url }}">{{ p_moniker }}</a>
+        </h4>
+        <ul class="p-meta-list">
+          <li class="p-meta-list__item p-meta-list__item--color">
+            <span class="p-meta-list__icon __icon-{{ p_colour | downcase | replace: " ", "-" }}"></span> 
+            <span class="p-meta-list__text">{{ p_colour }}</span>
+          </li>
+          {% for m_item in metaList %} {% assign mItemArr = m_item | split : " : " %}
+          <li class="p-meta-list__item">
+            <span class="p-meta-list__icon">{%- render 'theme-icon' with mItemArr[0] -%}</span>
+            <span class="p-meta-list__text">{{ mItemArr[1] }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td class="p-price">
+        <span>From</span>
+        <div class="p-price-result">{{ product.price | money_without_trailing_zeros }}</div>
+        {% render 'product-stock-status' | product: product %}
+      </td>
+      <td class="p-action">
+        <form action="/cart/add" method="post">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+          <button class="btn" type="submit" value="BUY DIRECT">Add To Cart</button>
+        </form>
+        <a href="{{ product.url }}" class="view-more-link">View more</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> <!-- .product-list-table -->
+{% endpaginate %}

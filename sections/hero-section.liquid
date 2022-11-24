@@ -1,0 +1,329 @@
+{% liquid
+  assign class_fullwidth = ""
+  assign class_content_pos = "pos--" | append: section.settings.content_position
+  assign button_target = ""
+
+  if section.settings.full_width == true
+    assign class_fullwidth = "ss-fullwidth"
+  else
+    assign class_fullwidth = "content-container"
+  endif
+
+  if section.settings.button_click_open_new_tab == true
+    assign button_target = "target='_blank'"
+  endif
+%}
+
+{%- style -%}
+.hero--{{ section.id }} {
+  position: relative;
+}
+
+.hero--{{ section.id }}.ss-fullwidth {
+  width: 100%;
+}
+
+.hero--{{ section.id }} .hero-section__inner {
+  z-index: 3;
+  position: relative;
+  display: flex;
+}
+
+.hero--{{ section.id }} .pos--left { justify-content: start; }
+.hero--{{ section.id }} .pos--right { justify-content: end; }
+.hero--{{ section.id }} .pos--center { justify-content: center; }
+
+.hero--{{ section.id }} .hero-section__entry {
+  width: {{ section.settings.content_width }}%;
+  max-width: 100%;
+  padding: {{ section.settings.space_top_bottom_content }}px 0;
+}
+
+.hero--{{ section.id }} .hero-section__entry > * {
+  color: {{ section.settings.content_color }};
+  font-family: 'Open Sans';
+}
+
+.hero--{{ section.id }} .hero-section__entry h1,
+.hero--{{ section.id }} .hero-section__entry h2,
+.hero--{{ section.id }} .hero-section__entry h3,
+.hero--{{ section.id }} .hero-section__entry h4,
+.hero--{{ section.id }} .hero-section__entry h5,
+.hero--{{ section.id }} .hero-section__entry h6 {
+  font-weight: bold;
+}
+
+.hero--{{ section.id }} .hero-section__entry h1 {
+  font-size: 48px;
+}
+
+.hero--{{ section.id }} .hero-section__entry p {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.hero--{{ section.id }} .hero-section__background-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url({{ section.settings.background_image | img_url: 'master' }}) no-repeat center center / cover, #fefefe;
+  z-index: 0;
+}
+
+.hero--{{ section.id }} .hero-button {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: white;
+  border-radius: 4px;
+  padding: 20px 32px;
+  color: #004F59;
+  font-weight: bold;
+  margin-top: 20px;
+  display: inline-block;
+  transition: .3s ease;
+  -webkit-transition: .3s ease;
+}
+
+.hero--{{ section.id }} .hero-button:hover {
+  opacity: .8;
+}
+
+.hero--{{ section.id }} .feature-in__container {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+.hero--{{ section.id }} .feature-in__label {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  align-items: center;
+  color: {{ section.settings.content_color }};
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.hero--{{ section.id }} .feature-in__label:after,
+.hero--{{ section.id }} .feature-in__label:before {
+  content: "";
+  border-bottom: solid 1px;
+  width: 50%;
+  opacity: .2;
+}
+
+.hero--{{ section.id }} .feature-in__label:before {
+  margin-right: 36px;
+}
+
+.hero--{{ section.id }} .feature-in__label:after {
+  margin-left: 36px;
+}
+
+.hero--{{ section.id }} .feature-in__items {
+  display: flex;
+  margin: 0 -15px;
+}
+
+.hero--{{ section.id }} .feature-in-item {
+  padding: 0 15px;
+  box-sizing: border-box;
+  width: calc(100% / 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.hero--{{ section.id }} .feature-in-item img {
+  max-width: calc(100% - 20px);
+  max-height: 52px;
+}
+
+@media(max-width: 768px) {
+  .hero--{{ section.id }} .hero-section__entry {
+    width: calc(100% - 10%);
+    margin-left: 5%;
+    text-align: center;
+  }
+  .hero--{{ section.id }} .feature-in__items {
+    margin: 0 -15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero--{{ section.id }} .feature-in-item {
+    padding: 0 8px;
+    width: calc(100% / 3);
+    margin-bottom: 20px;
+  }
+  .hero--{{ section.id }} .feature-in-item img{
+      max-width: calc(100% - 10px);
+  }
+}
+
+@media(max-width: 554px) {
+  .hero--{{ section.id }} .hero-section__entry h1 {
+    font-size: 28px;
+  }
+  .hero--{{ section.id }} .hero-section__entry p {
+    font-size: 18px;
+  }
+}
+{%- endstyle -%}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="hero-section" 
+  class="hero-section hero--{{ section.id }} {{ section.class }} {{ class_fullwidth }}">
+  <div class="hero-section__background-layer"></div>
+  
+  {% if section.settings.full_width %}
+  <div class="content-container">
+  {% endif %}
+    
+    <div class="hero-section__inner {{ class_content_pos }}">
+      <div class="hero-section__entry">
+        {{ section.settings.content }}
+        <a href="{{ section.settings.button_url }}" class="hero-button" {{ button_target }}>
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    </div> <!-- .hero-section__inner -->
+
+    <div class="feature-in__container">
+      <h4 class="feature-in__label">{{ section.settings.feature_title }}</h4>
+      <div class="feature-in__items">
+        {% for block in section.blocks %} 
+          {% render 'feature-item', block: block %}
+        {% endfor %}
+      </div>
+    </div>
+    
+  {% if section.settings.full_width %}
+  </div>
+  {% endif %}
+
+</div> <!-- .hero-section -->
+
+{% schema %}
+{
+  "name": "FEATURED IN",
+  "class": "hero-section--container",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Section Full Width",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Content here! Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>",
+      "info": "Enter your content hero section"
+    },
+    {
+      "type": "color", 
+      "id": "content_color",
+      "label": "Content Color",
+      "default": "#000"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Button Text",
+      "info": "Enter button text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Url",
+      "info": "Enter button url"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_click_open_new_tab",
+      "label": "Button click open new tab",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Select backgound image for your section"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "number",
+      "id": "space_top_bottom_content",
+      "label": "Space Top & Bottom of Content",
+      "default": 120,
+      "info" : "Spacing top & bottom of content"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width (%)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "info" : "Content width"
+    },
+    {
+      "type": "text",
+      "id": "feature_title",
+      "label": "Feature Title",
+      "info": "Enter feature title",
+      "default": "Feature In"
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_enable",
+      "label": "Feature enable",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature-item",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "f_image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

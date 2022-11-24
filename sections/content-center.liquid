@@ -1,0 +1,240 @@
+<section 
+  class="page-section ss-content-center {{ section.settings.custom_class }}" 
+  style="background-color: {{ section.settings.background_color }}; padding: {{ section.settings.space_top }}px 0 {{ section.settings.space_bottom }}px 0;">
+  <div 
+    class="ss-content-center__inner" 
+    style="width: {{ section.settings.content_width }}px;">
+    {% liquid 
+    if section.blocks.size 
+      for block in section.blocks 
+        assign blockType = block.type
+        case blockType
+          when 'heading-text'
+            render 'heading-text', block: block, section: section
+          when 'image-content-vertical'
+            render 'image-content-vertical', block: block, section: section
+          when 'thickness-preview'
+            render 'thickness-progress-bar-preview', block: block, section: section
+          when 'grid-open'
+            render 'content-center-grid-container', block: block, section: section, type: 'open'
+          when 'grid-close'
+            render 'content-center-grid-container', block: block, section: section, type: 'close'
+          when 'specs-item'
+            render 'specs-item', block: block, section: section
+          when '@app'
+            render block
+          when 'accordion-open'
+            render 'content-center-accordion-container', block: block, section: section, type: 'open'
+          when 'accordion-close'
+            render 'content-center-accordion-container', block: block, section: section, type: 'close'
+          when 'accordion-item'
+            render 'content-center-accordion-item', block: block, section: section
+          when 'image-box'
+            render 'content-center-image-box', block: block, section: section
+        endcase
+      endfor
+    endif %}
+  </div>
+</section> <!-- .ss-content-center -->
+
+{% schema %}
+{
+  "name": "Content Center",
+  "settings": [
+    {
+      "type": "number",
+      "id": "content_width",
+      "label": "Content Width",
+      "default": 800
+    }, 
+    {
+      "type": "number",
+      "id": "space_top",
+      "label": "Space Top",
+      "default": 112
+    }, 
+    {
+      "type": "number",
+      "id": "space_bottom",
+      "label": "Space Bottom",
+      "default": 112
+    }, 
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ECEFF0"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading-text",
+      "name": "Heading Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading"
+        },
+        {
+          "type": "number",
+          "id": "space_bottom",
+          "label": "Space Bottom"
+        }
+      ]
+    },
+    {
+      "type": "image-content-vertical",
+      "name": "Image & Content Vertical", 
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image" 
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description", 
+          "label": "Content"
+        },
+        { 
+          "type": "checkbox",
+          "id": "bottom_line",
+          "label": "Enable Bottom Line"
+        }
+      ]
+    }, 
+    {
+      "type": "thickness-preview",
+      "name": "Thickness Preview",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        }
+      ] 
+    },
+    {
+      "type": "grid-open",
+      "name": "Grid Open",
+      "settings": [
+        {
+          "type": "select",
+          "id": "grid_columns",
+          "label": "Grid Columns",
+          "options": [
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "default": "3"
+        },
+        {
+          "type": "number",
+          "id": "gap_horizontal",
+          "label": "Gap Horizontal",
+          "default": 32
+        },
+        {
+          "type": "number",
+          "id": "gap_vertical",
+          "label": "Gap Vertical",
+          "default": 32
+        }
+      ] 
+    },
+    {
+      "type": "grid-close",
+      "name": "Grid Close"
+    },
+    {
+      "type": "specs-item",
+      "name": "Specs Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }, 
+    {
+      "type": "accordion-open",
+      "name": "Accordion Open",
+      "settings": [
+        {
+          "type": "number",
+          "id": "active_item_default",
+          "label": "Active Item Default",
+          "default": 1
+        }
+      ] 
+    },
+    {
+      "type": "accordion-close",
+      "name": "Accordion Close"
+    },
+    {
+      "type": "accordion-item",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "image-box",
+      "name": "Image Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apps"
+    }
+  ]
+}
+{% endschema %}

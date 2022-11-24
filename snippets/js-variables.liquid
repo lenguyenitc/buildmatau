@@ -1,0 +1,21 @@
+{% capture js_variables %}
+
+Shopify = window.Shopify || {};
+
+{% comment %} /* # Translation
+================================================== */ {% endcomment %}
+Shopify.translation = Shopify.translation || {};
+Shopify.translation.product_savings = "{{ 'products.product.savings' | t | strip_newlines | escape }}";
+Shopify.translation.free_price_text = "{{ settings.free_price_text }}";
+  
+{% comment %} Notify form {% endcomment %}
+Shopify.translation.notify_form_success = "{{ 'products.notify_form.post_success' | t | strip_newlines | escape }}";
+Shopify.translation.notify_form_email = "{{ 'products.notify_form.email' | t | strip_newlines | escape }}";
+Shopify.translation.contact_email = "{{ contact.fields.email }}";
+Shopify.translation.customer_email = "{{ customer.email }}";
+Shopify.translation.notify_form_send = "{{ 'products.notify_form.send' | t | strip_newlines | escape }}";
+Shopify.translation.email_content = "{{ 'products.notify_form.email_content' | t | strip_newlines | escape }}";
+
+{% endcapture %}
+{%- assign js_variables = js_variables | split: 'Shopify.' -%}
+{%- for variable in js_variables -%}{%- assign variableblock = variable | strip -%}{% if forloop.first %}{{ variableblock }}{% else %}{{ variableblock | prepend: 'Shopify.' }}{% endif %}{%- endfor -%}

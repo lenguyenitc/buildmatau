@@ -1,0 +1,272 @@
+{% style %}
+.review-section-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding: 64px 0 34px;
+}
+
+.review-section-{{ section.id }} .review-section__heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.review-section-{{ section.id }} .review-section__heading h4,
+.review-section-{{ section.id }} .review-section__heading a {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 16px 0 0;
+}
+
+.review-section-{{ section.id }} .review-section__heading h4 {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.review-section-{{ section.id }} .review-section__heading a {
+  font-weight: bold !important;
+  color: #03555F;
+  display: flex;
+  align-items: center;
+}
+
+.review-section-{{ section.id }} .review-section__heading a svg{
+  margin-left: 10px;
+  transform: scale(1.2);
+}
+  
+.review-section-{{ section.id }} .review-section__heading .heading-line {
+  width: 100%;
+  border-bottom: 1px solid #CADFDC;
+}
+  
+.review-section-{{ section.id }} .jdgm-carousel-wrapper {
+  padding: 10px 0;
+}
+.review-section-{{ section.id }} .jdgm-carousel-wrapper {
+  width: 100% !important;
+}
+.review-section-{{ section.id }} .jdgm-carousel-item > * {
+  padding: 0 32px;
+  border: solid #eee;
+  border-width: 0 1px;
+  display: block;
+  width: 100%;
+  margin: 0;
+  background: white;
+
+  box-shadow: 8px 8px 0px rgba(238, 242, 241, 0.5);
+}
+.review-section-{{ section.id }} .jdgm-carousel-item > *:first-child {
+  border-top: solid 1px #eee;
+  padding-top: 32px;
+  border-radius: 8px 8px 0 0;
+}
+.review-section-{{ section.id }} .jdgm-carousel-item > *:last-child {
+  border-bottom: solid 1px #eee;
+  padding-bottom: 32px;
+  border-radius: 0 0 8px 8px;
+}
+.review-section-{{ section.id }} .jdgm-carousel-wrapper .jdgm-widget.jdgm-carousel {
+  width: 100%;
+}
+.review-section-{{ section.id }} .review-section__inner {
+
+}
+.review-section-{{ section.id }} .jdgm-carousel-title-and-link {
+  display: none;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item *:not(.jdgm-star) {
+  font-family: 'Open Sans';
+}
+
+.review-section-{{ section.id }} .jdgm-star {
+  color: #FB6F1F;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__review-rating {
+  margin-bottom: 8px;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__review-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #314644;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__review-body {
+  font-size: 18px;
+  font-weight: 300;
+  color: #314644;
+  letter-spacing: 0;
+  line-height: 1.5em;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-wrapper .jdgm-carousel-item__review {
+  height: calc(69.5% - 4em);
+  padding-bottom: 8px;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel__item-container {
+  width: calc(100% + 60px);
+  margin-left: -30px;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__reviewer-name {
+  font-size: 16px;
+  color: #006875;
+  padding-bottom: 16px;
+  letter-spacing: 0;
+}
+.review-section-{{ section.id }} .jdgm-carousel-item__reviewer-name:before {
+  content: "—";
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__timestamp,
+.review-section-{{ section.id }} .jdgm-carousel-item__product-title {
+  display: none;
+}
+
+.review-section-{{ section.id }} .jdgm-carousel-item__product-image {
+  border: 1px solid #DBE1E0;
+  border-radius: 4px;
+  max-width: 80px;
+  height: auto;
+}
+.jdgm-carousel-wrapper .jdgm-carousel__left-arrow {
+  margin-left:-54px !important;
+}
+.review-section-{{ section.id }} .jdgm-carousel__left-arrow,
+.review-section-{{ section.id }} .jdgm-carousel__right-arrow {
+  width: 14px;
+  height: 14px;
+  border-width: 0px;
+  position:relative;
+  border-color:transparent;
+  transform: rotate(0deg);
+  
+}
+
+.review-section-{{ section.id }} .jdgm-carousel__left-arrow::before {
+  content:url({{ 'prev.png' | asset_url }});
+  width:48px;
+  height:48px;
+  border-radius:50%;
+}  
+.review-section-{{ section.id }} .jdgm-carousel__right-arrow::before {
+  content:url({{ 'next.png' | asset_url }});
+  width:48px;
+  height:48px;
+  border-radius:50%;
+}  
+@media(min-width:1600px) {
+  .review-section-{{ section.id }} .jdgm-carousel__right-arrow {
+    margin-right: -80px !important;
+  }
+  .review-section-{{ section.id }} .jdgm-carousel__left-arrow {
+    margin-left:-107px !important;
+  }
+}  
+@media(max-width:1440px) {
+  .review-section__inner .jdgm-carousel__arrows {
+    display:none;
+  }
+}
+@media(max-width: 768px) {}
+@media(max-width: 554px) {
+  .review-section-{{ section.id }} { padding: 32px 0 2px; }
+  .review-section-{{ section.id }} .review-section__heading { flex-direction: column; }
+  .review-section-{{ section.id }} .review-section__heading h4 { 
+    margin-bottom: 4px;                                     
+    white-space: initial;
+    margin-right:0;
+    text-align: center;
+  }
+  .review-section-{{ section.id }} .review-section__heading .heading-line { margin-top: 12px; }
+  
+  .review-section-{{ section.id }} .jdgm-carousel__left-arrow,
+  .review-section-{{ section.id }} .jdgm-carousel__right-arrow {
+    opacity: .1;  
+  }
+  .review-section-{{ section.id }}:hover .jdgm-carousel__left-arrow,
+  .review-section-{{ section.id }}:hover .jdgm-carousel__right-arrow {
+    opacity: 1;
+  }
+  .review-section-{{ section.id }} .jdgm-carousel__left-arrow { margin-left: 4px !important; }
+  .review-section-{{ section.id }} .jdgm-carousel__right-arrow { margin-right: 4px !important; }
+}
+{% endstyle %}
+
+<div 
+  data-section-id="{{ section.id }}"
+  data-section-type="review-section" 
+  class="review-section review-section-{{ section.id }} {{ section.class }}" >
+  <div class="content-container">
+    <div class="review-section__inner">
+      
+      <div class="review-section__heading">
+        <h4>{{ section.settings.label }}</h4>
+
+        {% if section.settings.see_all %}
+        <a href="{{ section.settings.see_all_url }}" target="_blank">
+          See All
+          <svg width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.1049 6.10168C3.13806 6.06945 3.17747 6.04388 3.22084 6.02643C3.26422 6.00898 3.31073 6 3.35769 6C3.40465 6 3.45116 6.00898 3.49454 6.02643C3.53791 6.04388 3.57732 6.06945 3.61048 6.10168L7.8951 10.255C7.92835 10.2872 7.95473 10.3254 7.97273 10.3674C7.99073 10.4095 8 10.4546 8 10.5001C8 10.5456 7.99073 10.5907 7.97273 10.6327C7.95473 10.6748 7.92835 10.713 7.8951 10.7451L3.61048 14.8985C3.54344 14.9635 3.45251 15 3.35769 15C3.26287 15 3.17194 14.9635 3.1049 14.8985C3.03785 14.8335 3.00019 14.7454 3.00019 14.6534C3.00019 14.5615 3.03785 14.4734 3.1049 14.4084L7.13744 10.5001L3.1049 6.59178C3.07165 6.55963 3.04527 6.52144 3.02727 6.47939C3.00927 6.43734 3 6.39226 3 6.34673C3 6.30121 3.00927 6.25613 3.02727 6.21408C3.04527 6.17203 3.07165 6.13383 3.1049 6.10168V6.10168Z" stroke="#03555F"></path>
+          </svg>
+        </a>
+        {% endif %}
+        
+        <span class="heading-line"></span>
+      </div> <!-- .review-section__heading -->
+      
+      {% for block in section.blocks %}
+        {% render block %}
+      {% endfor %}
+    </div>
+  </div>
+</div> <!-- .review-section -->
+
+{% schema %}
+{ 
+  "name": "Review Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "info": "Enter label",
+      "default": "500+ 5 STAR REVIEWS"
+    },
+    {
+      "type": "checkbox",
+      "id": "see_all",
+      "label": "Enable See All",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "see_all_url",
+      "label": "See All Url",
+      "info": "Select see all url"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF",
+      "info": "Select background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

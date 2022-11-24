@@ -1,0 +1,182 @@
+{% liquid
+
+%}
+
+{% style %}
+.category-picker-{{ section.id }} {
+  background-color: {{ section.settings.background_color }};
+  padding: 80px 0 50px 0;
+}
+
+.category-picker-{{ section.id }} .category-picker__inner {
+
+}
+
+.category-picker-{{ section.id }} .category-picker__heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.category-picker-{{ section.id }} .category-picker__heading h4,
+.category-picker-{{ section.id }} .category-picker__heading a {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0 16px 0 0;
+}
+
+.category-picker-{{ section.id }} .category-picker__heading h4 {
+  letter-spacing: 2px;
+  color: #333;
+}
+
+.category-picker-{{ section.id }} .category-picker__heading a {
+  font-weight: bold !important;
+  color: #03555F;
+  display: flex;
+  align-items: center;
+}
+
+.category-picker-{{ section.id }} .category-picker__heading a svg {
+  margin-left: 8px;
+  display: none;
+}
+
+.category-picker-{{ section.id }} .category-picker__heading .heading-line {
+  width: 100%;
+  border-bottom: 1px solid #CADFDC;
+}
+
+.category-picker-{{ section.id }} .category-picker__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -30px;
+}
+
+.category-picker-{{ section.id }} .category-picker__list .category-picker-item {
+  padding: 0 15px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  width: calc(100% / 5);
+}
+
+@media(max-width: 768px) {
+  .category-picker-{{ section.id }} .category-picker__heading h4
+  {
+    white-space: break-spaces;
+  }
+  .category-picker-{{ section.id }} .category-picker__heading a {
+    margin-right:5px 0 0 0;
+  }
+}
+@media(max-width: 554px) {
+  .category-picker-{{ section.id }} {
+    padding: 32px 0 2px 0;
+  }
+  .category-picker-{{ section.id }} .category-picker__heading {
+    flex-direction: column;
+  }
+  .category-picker-{{ section.id }} .category-picker__heading h4 {
+    margin-bottom: 4px; 
+    margin-right:0;
+    text-align:center;
+    white-space: initial; 
+  }
+  .category-picker-{{ section.id }} .category-picker__heading .heading-line { margin-top: 12px; }
+  .category-picker-{{ section.id }} .category-picker__list { justify-content: center; }
+  .category-picker-{{ section.id }} .category-picker__list .category-picker-item { width: calc(100% / 3); }
+  .category-picker-{{ section.id }} .category-picker__heading a svg { display: block; }
+}
+{% endstyle %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="category-picker-section"
+  class="category-picker-section category-picker-{{ section.id }} {{ section.class }}" >
+  <div class="content-container">
+    <div class="category-picker__inner">
+      <div class="category-picker__heading">
+        <h4>{{ section.settings.label }}</h4>
+
+        {% if section.settings.see_all %}
+        <a href="{{ section.settings.see_all_url }}" target="_blank">
+          See All
+          <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1.1049 1.10168C1.13806 1.06945 1.17747 1.04388 1.22084 1.02643C1.26422 1.00898 1.31073 1 1.35769 1C1.40465 1 1.45116 1.00898 1.49454 1.02643C1.53791 1.04388 1.57732 1.06945 1.61048 1.10168L5.8951 5.25504C5.92835 5.28719 5.95473 5.32539 5.97273 5.36744C5.99073 5.40949 6 5.45456 6 5.50009C6 5.54562 5.99073 5.59069 5.97273 5.63274C5.95473 5.67479 5.92835 5.71299 5.8951 5.74514L1.61048 9.8985C1.54344 9.96349 1.45251 10 1.35769 10C1.26287 10 1.17194 9.96349 1.1049 9.8985C1.03785 9.83351 1.00019 9.74536 1.00019 9.65345C1.00019 9.56154 1.03785 9.47339 1.1049 9.4084L5.13744 5.50009L1.1049 1.59178C1.07165 1.55963 1.04527 1.52144 1.02727 1.47939C1.00927 1.43734 1 1.39226 1 1.34673C1 1.30121 1.00927 1.25613 1.02727 1.21408C1.04527 1.17203 1.07165 1.13383 1.1049 1.10168Z" fill="#018192" stroke="#018192"/> </svg>
+        </a>
+        {% endif %}
+
+        <span class="heading-line"></span>
+      </div> <!-- .category-picker__heading -->
+      <div class="category-picker__list">
+        {% for block in section.blocks %}
+          {% render 'category-picker-item' | block: block %}
+        {% endfor %}
+      </div> <!-- .category-picker__list -->
+    </div> <!-- .category-picker__inner -->
+</div>
+</div> <!-- .category-picker-section -->
+
+{% schema %}
+{
+  "name": "Collection Picker",
+  "class": "category-picker--container",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "info": "Enter label",
+      "default": "Explore Categories"
+    },
+    {
+      "type": "checkbox",
+      "id": "see_all",
+      "label": "Enable See All",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "see_all_url",
+      "label": "See All Url",
+      "info": "Select see all url"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF",
+      "info": "Select background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category-picker-item",
+      "name": "Collection Picker Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "collection_image",
+          "label": "Collection Image"
+        },
+        {
+          "type": "text",
+          "id": "collection_label",
+          "label": "Collection label",
+          "default": "Collection Name"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "Collection Url",
+          "info": "Enter collection Url"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

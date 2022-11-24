@@ -1,0 +1,471 @@
+{% style %}
+  .footer__section {
+    border-top:none;
+  }
+  .footer__section.footer__section--border {
+    background: #fafafa;
+    border-top:none;
+    padding-top:0;
+  }
+  .template-index .footer__section.footer__section--border {
+    background: white;
+  }
+  .footer__section .footer__newsletter {
+    width: 1268px;
+    max-width: calc(100% - 40px);
+    margin: 0 auto;
+    justify-content: space-between;
+    background: radial-gradient(41.17% 450% at 87.5% 50%, rgba(249, 237, 236, 0.75) 0%, rgba(249, 193, 180, 0) 100%), radial-gradient(44.09% 547.28% at 36.83% 352.88%, rgba(243, 217, 193, 0.75) 0%, rgba(232, 215, 195, 0) 100%), #FFFBF2;
+    padding: 24px 40px;
+    border: 1px solid #ECD7BF;
+    border-radius: 8px;
+  }
+  .footer__section .footer__newsletter>* {
+    padding:0;
+  }
+  .footer__section .newsletter__input-group {
+    max-width:100%;
+  }
+  #newsletter-footer .input-group-btn .btn {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 110%;
+    text-align: center;
+    letter-spacing: 0.1em;
+    padding: 0 50px;
+    border-radius: 4px;
+    background: #03555F;
+    text-transform: uppercase;
+    height: 56px;
+  }
+  #newsletter-footer #Email-footer {
+    padding:0px 18px;
+    background: #FFFFFF;
+    border: 1px solid #D0D2D2;
+    margin-right:7px;
+    height:56px;
+    width:300px;
+    border-radius: 4px;
+    max-width:100%;
+  }
+  #newsletter-footer #Email-footer::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #A6B5B3;
+  }
+  .footer__newsletter .footer__subscribe p {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 180%;
+    color: #333333;
+  }
+
+  @media(max-width: 1200px) {
+    .footer__newsletter {
+      flex-direction: column;
+    }
+    .footer__newsletter .footer__subscribe p {
+      margin-bottom:7px;
+    }
+  }
+  @media(max-width:768px) {
+    .footer__section .footer__newsletter {
+        max-width: 100%;
+        padding: 24px;
+    }
+    .footer__newsletter .footer__subscribe p {
+      font-size: 20px;
+      line-height: 25px;
+    }
+  }
+  @media(max-width:500px) {
+    .footer__section .newsletter__input-group {
+       flex-direction: column;
+    }
+    #newsletter-footer #Email-footer {
+      width:100%;
+      max-width:100%;
+      margin-bottom:7px;
+    }
+    #newsletter-footer .input-group-btn .btn {
+      width:100%;
+    }
+  }
+{% endstyle %}
+{%- if section.settings.show_newsletter -%}
+  <div class="footer__section footer__section--border">
+    <div class="page-width">
+      <div class="footer__newsletter">
+        {%- if section.settings.newsletter_richtext != blank -%}
+          <div class="footer__subscribe rte rte--nomargin">
+            {{ section.settings.newsletter_richtext }}
+          </div>
+        {%- endif -%}
+
+        {%- render 'newsletter-form', section_id: section.id, snippet_context: 'footer' -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% comment %}
+  Main navigation is copied here with JS for mobile users
+{% endcomment %}
+{%- if section.settings.footer_main_menu -%}
+  <div id="FooterMobileNavWrap" class="footer__section footer__section--border medium-up--hide hide">
+    <div id="FooterMobileNav" class="page-width"></div>
+  </div>
+{%- endif -%}
+<div class="section-footer-address-showroom">
+  <div class="page-width">
+    <div class="footer-address-show-room">
+      {%- render 'footer-address-showroom', section: section -%}
+    </div>
+  </div>
+</div>
+<footer class="site-footer" data-section-id="{{ section.id }}" data-section-type="footer-section">
+  
+  <div class="footer__section footer__section--top">
+    <div class="page-width">
+        <div class="footer__blocks logo_and_socials">
+            {%- render 'footer-topinfo', section: section -%}
+        </div>
+    </div>
+  </div>
+  
+  <div id="FooterMenus" class="footer__section footer__section--menus">
+    <div class="page-width">
+      <div class="footer__blocks">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'menu' or block.type == 'contact' -%}
+          <div {{ block.shopify_attributes }} class="footer__block" data-type="{{ block.type }}">
+            {%- liquid
+              case block.type
+                when 'menu'
+                  render 'footer-menu', block: block
+                when 'contact'
+                  render 'footer-contact', block: block
+              endcase
+            -%}
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__section footer__section--bottom">
+    <div class="page-width">
+      <div class="footer__blocks footer_bottom">
+          {%- render 'footer-bottominfo', section: section -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter",
+        "label": "Show newsletter signup",
+        "info": "Customers who subscribe will have their email address added to the 'accepts marketing' [customer list](/admin/customers?query=&accepts_marketing=1).",
+        "default": true
+      },
+      {
+        "type": "richtext",
+        "id": "newsletter_richtext",
+        "label": "Text",
+        "default": "<p>Subscribe today to hear first about our sales</p>"
+      },
+      {
+        "type": "header",
+        "content": "Additional footer content"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_main_menu",
+        "label": "Repeat main menu on mobile",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_copyright",
+        "label": "Show copyright"
+      },
+      {
+        "type": "text",
+        "id": "copyright_text",
+        "label": "Additional copyright text"
+      },
+      {
+        "type": "link_list",
+        "id": "policies_menu",
+        "label": "Policies menu",
+        "info": "This menu will only show top-level links"
+      }
+    ],
+    "blocks": [
+	   {
+        "type": "footer_top_info",
+        "name": "Footer Top Info",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+          },
+          {
+            "type": "image_picker",
+            "id": "logo-inverted",
+            "label": "White logo",
+            "info": "Used when on top of an image"
+          },
+          {
+            "type": "range",
+            "id": "desktop_logo_width",
+            "label": "Desktop logo width",
+            "default": 200,
+            "min": 100,
+            "max": 400,
+            "step": 10,
+            "unit": "px"
+          },
+          {
+            "type": "range",
+            "id": "mobile_logo_width",
+            "label": "Mobile logo width",
+            "default": 140,
+            "min": 60,
+            "max": 200,
+            "step": 10,
+            "unit": "px",
+            "info": "Set as a max-width, may appear smaller"
+          },
+          {
+            "type": "header",
+            "content": "Social"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_social",
+            "label": "Show social accounts",
+            "default": true
+          }
+        ]
+      },
+	  {
+        "type": "footer_bottom_info",
+        "name": "Footer Bottom Info",
+        "limit": 1,
+        "settings": [
+            {
+              "type": "header",
+              "content": "Menu"
+            },
+            {
+              "type": "link_list",
+              "id": "menu",
+              "label": "Choose a menu",
+              "default": "footer",
+              "info": "This menu will only show footer bottom"
+            },
+            {
+              "type": "header",
+              "content": "Payments and localization"
+            },
+            {
+              "type": "checkbox",
+              "id": "show_payment_icons",
+              "label": "Show payment icons",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "show_locale_selector",
+              "label": "Show language selector",
+              "info": "To add a language, go to your [language settings.](/admin/settings/languages)",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "show_currency_selector",
+              "label": "Show currency selector",
+              "info": "To add a currency, go to your [currency settings.](/admin/settings/payments)",
+              "default": true
+            }
+        ]
+      },
+      {
+        "type": "payment",
+        "name": "Payments and localization",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show payment icons",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_locale_selector",
+            "label": "Show language selector",
+            "info": "To add a language, go to your [language settings.](/admin/settings/languages)",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show_currency_selector",
+            "label": "Show currency selector",
+            "info": "To add a currency, go to your [currency settings.](/admin/settings/payments)",
+            "default": true
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Navigation",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "Defaults to menu title"
+          },
+		  {
+            "type": "text",
+            "id": "title_link",
+            "label": "Title link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Choose a menu",
+            "default": "footer",
+            "info": "This menu will only show top-level links"
+          }
+        ]
+      },
+      {
+        "type": "contact",
+        "name": "Contact us",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Contact"
+          },
+          {
+            "type": "text",
+            "id": "heading_text",
+            "label": "Heading text"
+          },
+          {
+            "type": "text",
+            "id": "heading_link",
+            "label": "Heading link"
+          },
+          {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone number"
+          },
+          {
+            "type": "text",
+            "id": "email",
+            "label": "Email"
+          },
+          {
+            "type": "textarea",
+            "id": "address_text",
+            "label": "Address Text"
+          },
+          {
+            "type": "text",
+            "id": "address_link",
+            "label": "Address Link"
+          }
+        ]
+      },
+      {
+       "type": "footer_address",
+       "name": "Footer address",
+       "limit": 1,
+         "settings": [
+        {
+           "type": "text",
+           "id": "name_show_room",
+           "label": "Name ShowRoom",
+           "info": "Defaults to text title",
+          "default": "Melbourne SHOWROOM"
+         },
+         {
+           "type": "text",
+           "id": "address_show_room",
+           "label": "Address ShowRoom",
+           "default": "18 Babbage Drv, Dandenong South VIC 3175"
+         },
+         {
+           "type": "text",
+           "id": "time_open_show_room",
+           "label": "Time",
+           "default": "Mon-Fri 9:00am- 4:00pm"
+         },
+         {
+           "type": "text",
+           "id": "text_btn_google_map",
+           "label": "Google Map Button",
+           "default": "Google Maps"
+         },
+         {
+           "type": "text",
+           "id": "link_btn_google_map",
+           "label": "Link Google Maps"
+         },
+         {
+           "type": "text",
+           "id": "text_btn_direction",
+           "label": "Directions Button",
+           "default": "Directions"
+         },
+         {
+           "type": "text",
+           "id": "link_btn_direction",
+           "label": "Link directions"
+         },
+         {
+           "type": "image_picker",
+           "id": "image_show_room",
+           "label": "Image"
+         }
+                  
+           
+      ]
+     }
+    ],
+    "default": {
+      "settings": {},
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {}
+        },
+        {
+          "type": "payment",
+          "settings": {}
+        }
+      ]
+    }
+  }
+{% endschema %}

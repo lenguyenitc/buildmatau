@@ -1,0 +1,39 @@
+{% style %}
+.color-box-item {}
+.color-box-item__inner {
+  border-radius: 8px;
+  padding: 55px 24px 16px 24px;
+}
+.color-box-item__entry .sub-text,
+.color-box-item__entry .color-box-title {
+  color: white;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+}
+.color-box-item__entry .sub-text {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.color-box-item__entry .color-box-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+@media(max-width: 768px) {}
+@media(max-width: 554px) {
+  .color-box-item__inner { padding: 20px 24px 20px 24px; }
+  .color-box-item__entry .sub-text { font-size: 14px; }
+  .color-box-item__entry .color-box-title { font-size: 20px; }
+}
+{% endstyle %}
+
+<div class="color-box-item">
+  <a href="{{ block.settings.box_url }}" target="_blank">
+    <div class="color-box-item__inner" style="background: url({{ block.settings.image | img_url: 'master' }}) no-repeat center center / cover, #333;">
+      <div class="color-box-item__entry">
+        <div class="sub-text">{{ block.settings.sub_text }}</div>
+        <h4 class="color-box-title">{{ block.settings.label }}</h4>
+      </div>
+    </div>
+  </a>
+</div> <!-- .color-box-item -->
